@@ -1,110 +1,73 @@
-\# IOTA — Wi-Fi CSI-Based Human Activity Recognition
+# IOTA — Wi-Fi CSI-Based Human Activity Recognition
 
+A real-time Wi-Fi sensing prototype that uses Channel State Information (CSI) and machine learning to detect human presence without cameras or wearable sensors.
 
+## Overview
 
-A Wi-Fi sensing prototype that uses Channel State Information (CSI) and machine learning to detect human presence.
+IOTA uses two ESP32-C6 boards to transmit and receive Wi-Fi signals. The receiver captures CSI data, which is processed to extract signal features and classify room occupancy.
 
+## Key Features
 
+- CSI packet parsing and signal processing
+- Window-based feature extraction
+- Machine learning model training using a scikit-learn pipeline
+- Empty-room and occupied-room calibration
+- Probability-based classification and temporal smoothing
+- Real-time occupancy detection through serial data
 
-\## Overview
+## Hardware
 
+- ESP32-C6 transmitter
+- ESP32-C6 receiver
+- Computer running Python
 
-
-The system processes CSI data received from an ESP32-C6 receiver, extracts signal features, trains a classifier, and performs real-time occupancy detection.
-
-
-
-\## Features
-
-
-
-\- CSI packet parsing and signal processing
-
-\- Window-based feature extraction
-
-\- Machine learning model training
-
-\- Empty-room and occupied-room calibration
-
-\- Probability-based classification and temporal smoothing
-
-\- Real-time serial data processing
-
-
-
-\## Hardware
-
-
-
-\- ESP32-C6 transmitter
-
-\- ESP32-C6 receiver
-
-\- Computer running Python
-
-
-
-\## Project Structure
-
-
+## Project Structure
 
 ```text
-
 IOTA-WiFi-CSI-HAR/
-
+├── src/
+│   └── csi_har.py
 ├── README.md
-
 ├── requirements.txt
-
-├── .gitignore
-
-└── src/
-
-&#x20;   └── csi\_har.py
-
+└── .gitignore
 ```
 
+## Getting Started
 
+### 1. Install dependencies
 
-\## Installation
-
-
-
-Install the dependencies:
-
-
+Make sure Python is installed, then run:
 
 ```bash
-
 python -m pip install -r requirements.txt
-
 ```
 
+### 2. Connect the hardware
 
+Connect the ESP32-C6 receiver to your computer and identify its serial port.
 
-\## Usage
+### 3. Check available options
 
-
-
-Connect the ESP32-C6 receiver and identify its serial port. Check the program's supported arguments:
-
-
+Run:
 
 ```bash
-
-python src/csi\_har.py --help
-
+python src/csi_har.py --help
 ```
 
+Follow the script's prompts to perform calibration and start real-time detection.
 
+## How It Works
 
-Follow the program's calibration prompts before starting real-time detection.
+1. The receiver collects Wi-Fi CSI packets.
+2. The program parses signal measurements and extracts features over time windows.
+3. A machine learning classifier is trained using calibration data.
+4. Consecutive predictions are smoothed to reduce unstable state changes.
+5. The system reports whether the sensing area is empty or occupied.
 
+## Notes
 
+Detection performance depends on sensor placement, environmental conditions, and calibration quality. This repository contains the Python software; hardware firmware and raw datasets are not included.
 
-\## Notes
+## Technologies
 
-
-
-Detection performance depends on sensor placement, environmental conditions, and calibration. This repository contains the software implementation; hardware firmware and raw datasets are not included.
-
+Python · NumPy · scikit-learn · PySerial · ESP32-C6
